@@ -3,6 +3,8 @@ remove_local_duplicates=function(vector1, vector2) {
   # build empty lists
   res1=c()
   res2=c()
+  vector1=unlist(vector1)
+  vector2=unlist(vector2)
   # see vector1
   for (i in 1:(length(vector1)-1)) {
     #if the next element is not the same as current,then put them in to results
