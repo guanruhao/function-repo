@@ -1,9 +1,6 @@
-
-library(devtools)
-source_url('https://raw.githubusercontent.com/guanruhao/changchun-city-subway/main/4%20upgrade%20of%20passenger%20info.R')
-
-
-k=3
+# a function to return trajectory given time
+find_trajectory=function(time,num_passenger) {
+k=num_passenger
 aaa=simulation_data[k,]$long_line
 bbb=simulation_data[k,]$path_node
 ccc=direction[k]
@@ -62,18 +59,17 @@ split_AAA=split(AAA, rep(1:length(BBB), BBB))
 split_DDD=split(DDD, rep(1:length(EEE), EEE))
 
 # a function to return trajectory given time
-find_trajectory=function(target,number) {
   # initialize group and rip ID
   group_idx= 1
   gap_idx=1
   subgroups=split_AAA
   #loop over subgroup
   for (group in subgroups) {
-    if (target >= group[1] & target <= tail(group, n=1)) {
+    if (time >= group[1] & time <= tail(group, n=1)) {
       prev_element=group[1]
       #loop over elements in the group
       for (element in group[-1]) {
-        if (target >= prev_element & target < element) {
+        if (time >= prev_element & time < element) {
           return(split_DDD[[group_idx]][gap_idx])
         }
         prev_element=element
@@ -88,21 +84,3 @@ find_trajectory=function(target,number) {
   #if failed to find, return NA
   return(NA)
 }
-
-# test the function
-find_trajectory(618) # return  8
-find_trajectory(624) # return  61
-find_trajectory(738) # return 71
-find_trajectory(751)# return 9
-find_trajectory(816) # return NA
-
-
-
-
-
-
-
-
-
-
-
